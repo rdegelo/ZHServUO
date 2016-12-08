@@ -45,6 +45,7 @@ using System.Linq;
 using Server.Spells.SkillMasteries;
 
 using RankDefinition = Server.Guilds.RankDefinition;
+using Server.Services.ZuluHotel;
 #endregion
 
 namespace Server.Mobiles
@@ -786,6 +787,8 @@ namespace Server.Mobiles
 			{
 				UpdateResistances();
 			}
+
+            UpdateZHSpecClass();
 		}
 
         public override int GetMaxResistance(ResistanceType type)
@@ -1041,7 +1044,8 @@ namespace Server.Mobiles
 			if (from is PlayerMobile)
 			{
 				((PlayerMobile)from).ClaimAutoStabledPets();
-			}
+                ((PlayerMobile)from).UpdateZHSpecClass();
+            }
 		}
 
 		private bool m_NoDeltaRecursion;
@@ -4504,6 +4508,9 @@ namespace Server.Mobiles
 		{
 			base.GetProperties(list);
 
+            if (ZHSpecClass != null)
+                list.Add(ZHSpecClass.ToString());
+
             if (Core.SA)
             {
                 if (m_SubtitleSkillTitle != null)
@@ -5186,7 +5193,7 @@ namespace Server.Mobiles
 			}
 
 			InvalidateMyRunUO();
-		}
+        }
 
 		public override void OnAccessLevelChanged(AccessLevel oldLevel)
 		{
@@ -6193,9 +6200,33 @@ namespace Server.Mobiles
 				m_BuffTable = null;
 			}
 		}
-		#endregion
+        #endregion
 
-		public void AutoStablePets()
+        #region ZuluHotel
+        private ZHSpecClass m_ZHSpecClass = null;
+
+        [CommandProperty(AccessLevel.Player, AccessLevel.Developer)]
+        public ZHSpecClass ZHSpecClass { get { return m_ZHSpecClass; } }
+
+        private void UpdateZHSpecClass()
+        {
+            var oldClass = m_ZHSpecClass;
+
+            m_ZHSpecClass = ZHSpecClass.CalculateClass(this);
+
+            if(oldClass != null || m_ZHSpecClass != null)
+                if ((oldClass == null && m_ZHSpecClass != null) || (oldClass != null && m_ZHSpecClass == null) || !m_ZHSpecClass.Equals(oldClass))
+                {
+                    InvalidateProperties();
+
+                    if (m_ZHSpecClass == null)
+                        SendMessage("You're no longer in any specialized class.");
+                    else
+                        SendMessage("You're now a {0}!", m_ZHSpecClass);
+                }
+        }
+        #endregion
+        public void AutoStablePets()
 		{
 			if (Core.SE && AllFollowers.Count > 0)
 			{

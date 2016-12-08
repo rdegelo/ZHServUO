@@ -9702,6 +9702,15 @@
     <Compile Include="Services\Virtues\Honesty.cs" />
     <Compile Include="Services\Virtues\Humility.cs" />
     <Compile Include="Services\Virtue Artifacts\VirtueArtifactsSystem.cs" />
+    <Compile Include="Services\ZuluHotel\Classes\ZHBardClass.cs" />
+    <Compile Include="Services\ZuluHotel\Classes\ZHBaseClass.cs" />
+    <Compile Include="Services\ZuluHotel\Classes\ZHCrafterClass.cs" />
+    <Compile Include="Services\ZuluHotel\Classes\ZHMageClass.cs" />
+    <Compile Include="Services\ZuluHotel\Classes\ZHRangerClass.cs" />
+    <Compile Include="Services\ZuluHotel\Classes\ZHThiefClass.cs" />
+    <Compile Include="Services\ZuluHotel\Classes\ZHWarriorClass.cs" />
+    <Compile Include="Services\ZuluHotel\Commands\ZHSetClass.cs" />
+    <Compile Include="Services\ZuluHotel\ZHSpecClass.cs" />
     <Compile Include="Skills\Fishing.cs">
       <SubType>Code</SubType>
     </Compile>
