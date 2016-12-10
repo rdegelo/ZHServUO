@@ -15,4 +15,7 @@ Add melle damage bonus | |
 Add magic damage bonus | | 
 Add class penalties | | 
 Add Class amor/weapon restrictions | | 
+Create ZH weapons | | 
+Create spellbooks | | 
+Cleanup unnecessary systems | | 
 ... | | 
